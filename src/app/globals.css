@@ -1,21 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-primary: #1a202c; /* Dark Gray */
+  --color-secondary: #c3c3c3; /* Light Gray */
+  --color-white: #ffffff; /* White */
+  --color-border-default: #c3c3c3;
+  --color-border-focus: #585858;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito", sans-serif;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+input {
+  height: 45px;
+  border: 1px solid var(--color-border-default);
+  padding: 0 10px;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid var(--color-border-focus);
+}
+
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  height: 45px;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.btn-disable {
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+  pointer-events: none;
 }
