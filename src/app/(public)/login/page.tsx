@@ -8,6 +8,8 @@ const Register = () => {
     email: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const isLoginDisable = () => {
     return !user.password || !user.email;
   };

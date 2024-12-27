@@ -1,6 +1,9 @@
 "use client";
+import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -9,12 +12,27 @@ const Register = () => {
     email: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
+
   const isRegisterDisable = () => {
     return !user.username || !user.password || !user.email;
   };
 
-  const onRegister = () => {
-    console.log(user);
+  const onRegister = async () => {
+    try {
+      setLoading(true);
+      axios.post("/api/users/register", user);
+      toast.success("User created successfully");
+      router.push("/login");
+      setLoading(false);
+    } catch (error: any) {
+      setLoading(false);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
