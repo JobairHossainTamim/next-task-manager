@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -11,6 +12,7 @@ const Register = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const isLoginDisable = () => {
     return !user.password || !user.email;
@@ -19,10 +21,15 @@ const Register = () => {
   const onLogin = async () => {
     try {
       setLoading(true);
-      axios.post("/api/users/login", user);
-      toast.success("User created successfully");
+      const response = axios.post("/api/users/login", user);
+      const result = await response;
+      if (result.data) {
+        toast.success("login successfully");
+        setLoading(false);
+        router.push("/home");
+      }
+
       // router.push("/login");
-      setLoading(false);
     } catch (error: any) {
       setLoading(false);
       toast.error(error.message);

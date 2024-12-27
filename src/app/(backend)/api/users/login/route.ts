@@ -31,12 +31,12 @@ export async function POST(req: NextRequest) {
     }
 
     // Create token
-    const token = jwt.sign({ userExists }, process.env.jwtSecret!, {
+    const token = jwt.sign({ UserId: userExists._id }, process.env.jwtSecret!, {
       expiresIn: "365d",
     });
 
     const response = NextResponse.json(
-      { message: "User Loggin  successfully" },
+      { message: "User Login  successfully" },
       { status: 201 }
     );
 
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
     response.cookies.set("token", token, {
       httpOnly: true,
       maxAge: 60 * 60 * 24 * 365,
-      path: "/",
+      path: "/home",
     });
 
     return response;
