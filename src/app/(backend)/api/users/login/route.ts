@@ -3,11 +3,12 @@ import User from "@/modules/users/user.model";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import path from "path";
+import { connectDB } from "@/config/config";
 
+connectDB();
 export async function POST(req: NextRequest) {
   try {
     const reqBody = await req.json();
-
     const userExists = await User.findOne({
       email: reqBody.email,
     });

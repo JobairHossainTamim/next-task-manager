@@ -1,9 +1,11 @@
 "use client";
+import { SetLoading } from "@/redux/slice/loaderSlice";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -14,6 +16,7 @@ const Register = () => {
 
   const [loading, setLoading] = useState(false);
 
+  const dispatch = useDispatch();
   const router = useRouter();
 
   const isRegisterDisable = () => {
@@ -22,16 +25,19 @@ const Register = () => {
 
   const onRegister = async () => {
     try {
-      setLoading(true);
-      axios.post("/api/users/register", user);
-      toast.success("User created successfully");
-      router.push("/login");
-      setLoading(false);
+      dispatch(SetLoading(true));
+      const response = await axios.post("/api/users/register", user);
+      if (response?.data) {
+        toast.success("User created successfully");
+        router.push("/login");
+        dispatch(SetLoading(true));
+      }
+      dispatch(SetLoading(false));
     } catch (error: any) {
-      setLoading(false);
+      dispatch(SetLoading(false));
       toast.error(error.message);
     } finally {
-      setLoading(false);
+      dispatch(SetLoading(false));
     }
   };
 
